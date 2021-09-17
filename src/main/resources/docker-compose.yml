@@ -1,0 +1,22 @@
+version: "3.7"
+services:
+  es:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.6.1
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    networks:
+      - elastic
+
+  java-app:
+    image: neileen/dockerhub_app:java-latest
+    ports:
+      - "8081:8081"
+    depends_on:
+      - es
+    networks:
+      - elastic
+
+networks:
+  elastic:
+    driver: bridge
